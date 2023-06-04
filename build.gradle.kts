@@ -38,8 +38,14 @@ plugins {
     kotlin("jvm") version "1.8.21"
 }
 
+object ModInfo {
+    const val NAME = "templateMod"
+    const val ID = "template_mod"
+    const val AUTHOR = "pea"
+}
+
 version = "0.1.0"
-group = "sh.pea.testmod" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "sh.pea.${ModInfo.NAME}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 println(
     "Java: " + System.getProperty("java.version") + " JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty(
@@ -59,9 +65,9 @@ minecraft.run {
         workingDirectory(project.file("run"))
         property("forge.logging.markers", "REGISTRIES")
         property("forge.logging.console.level", "debug")
-        property("forge.enabledGameTestNamespaces", "testmod")
+        property("forge.enabledGameTestNamespaces", ModInfo.ID)
         this.mods {
-            this.create("testmod") {
+            this.create(ModInfo.NAME) {
                 this.source(sourceSets.main.get())
             }
         }
@@ -71,9 +77,9 @@ minecraft.run {
         workingDirectory(project.file("run"))
         property("forge.logging.markers", "REGISTRIES")
         property("forge.logging.console.level", "debug")
-        property("forge.enabledGameTestNamespaces", "testmod")
+        property("forge.enabledGameTestNamespaces", ModInfo.ID)
         this.mods {
-            this.create("testmod") {
+            this.create(ModInfo.NAME) {
                 this.source(sourceSets.main.get())
             }
         }
@@ -83,9 +89,9 @@ minecraft.run {
         workingDirectory(project.file("run"))
         property("forge.logging.markers", "REGISTRIES")
         property("forge.logging.console.level", "debug")
-        property("forge.enabledGameTestNamespaces", "testmod")
+        property("forge.enabledGameTestNamespaces", ModInfo.ID)
         this.mods {
-            this.create("testmod") {
+            this.create(ModInfo.NAME) {
                 this.source(sourceSets.main.get())
             }
         }
@@ -97,7 +103,7 @@ minecraft.run {
         property("forge.logging.console.level", "debug")
         args(
             "--mod",
-            "testmod",
+            ModInfo.ID,
             "--all",
             "--output",
             file("src/generated/resources"),
@@ -105,7 +111,7 @@ minecraft.run {
             file("src/main/resources")
         )
         this.mods {
-            this.create("testmod") {
+            this.create(ModInfo.NAME) {
                 this.source(sourceSets.main.get())
             }
         }
@@ -143,15 +149,15 @@ dependencies {
 
 // Example for how to get properties into the manifest for reading at runtime.
 tasks.withType<Jar> {
-    archiveBaseName.set("testmod")
+    archiveBaseName.set(ModInfo.NAME)
     manifest {
         val map = HashMap<String, String>()
-        map["Specification-Title"] = "testmod"
-        map["Specification-Vendor"] = "pea"
+        map["Specification-Title"] = ModInfo.ID
+        map["Specification-Vendor"] = ModInfo.AUTHOR
         map["Specification-Version"] = "1" // We are version 1 of ourselves
         map["Implementation-Title"] = project.name
         map["Implementation-Version"] = archiveBaseName.get()
-        map["Implementation-Vendor"] = "pea"
+        map["Implementation-Vendor"] = ModInfo.AUTHOR
         map["Implementation-Timestamp"] = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(Date())
         attributes(map)
     }
