@@ -66,6 +66,11 @@ minecraft.run {
         property("forge.logging.markers", "REGISTRIES")
         property("forge.logging.console.level", "debug")
         property("forge.enabledGameTestNamespaces", ModInfo.ID)
+
+        // for hotswap https://forge.gemwire.uk/wiki/Hotswap
+        jvmArg("-XX:+AllowEnhancedClassRedefinition")
+        args("--username", "Player")
+
         this.mods {
             this.create(ModInfo.NAME) {
                 this.source(sourceSets.main.get())
